@@ -1,13 +1,125 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+h1 {
+    font-size: 3em;
+    color: #69c949;
+    margin: 30px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h2 {
+    text-align: center;
+    color: black;
+    font-size: larger7;
+}
+
+header {
+    background-color: #025b85;
+    border-bottom: 5px solid #69c949;
+    height: 180px;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 100px;
+}    
+
+button {
+    background-color: #69c949;
+}
+
+#nav {
+    list-style-type: none;
+    margin-top: 44px;
+    background-color: #69c949;
+}
+
+.nav {
+    display: inline;  
+    border-right: 1px solid black;
+    padding: 0 5px;
+}
+
+.nav:last-of-type {
+    border: none;
+}
+/* universal styling */
+body {
+    
+    background: repeat scroll 0 0%,transparent 
+    linear-gradient(to bottom,#025b85 0%,#012a3d 100%) repeat scroll 0 0;
+}
+  
+a, a:visited, a:active {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: rgb(0, 81, 255);
+}
+.open {
+    border-radius: 10px;
+    border: 2px solid #69c949;
+    list-style-type: none;
+    padding: 10px;
+    text-align: center;
+    background-color: #d7d7d7;
+    margin: 20px auto;
+    width: 20%;
+    display: block;
+}
+/* end title */
+
+/* photo nav */
+.navBtn {
+    width: 100px;
+    height: 60px;
+    font-size: 30px;
+}
+
+
+/* content holders */
+.content {
+    border: 2px solid black; 
+    width: 400px;
+    height: 500px;
+}
+
+#photo {
+    width: 400px;
+    height: 500px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+   /* page sections */
+
+.type, #type {
+    border-radius: 10px;
+    border: 2px solid #69c949;
+    list-style-type: none;
+    padding: 5px;
+    text-align: center;
+    background-color: #d7d7d7;
+    margin: 20px auto;
+    width: 60%;
+    display: block;
+}
+
+#details, #submit {
+    display: block;
+    margin: auto;
+    background-color: #d7d7d7;
+    
+}
+
+textarea {
+    resize: none;
+}
+  /* signup page */
+.signup {
+    padding-top: 10%;
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    color: #69c949;
 }
