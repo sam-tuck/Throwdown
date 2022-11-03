@@ -1,4 +1,3 @@
-import './App.css';
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useAuth } from './context/auth';
 import Title from './pages/title';
