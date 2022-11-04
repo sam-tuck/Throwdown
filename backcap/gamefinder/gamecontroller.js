@@ -1,5 +1,5 @@
 const gameservice = require("./gameservice");
-const usertasks = require("../user-items/userTasks");
+const usertasks = require("../userItems/userTasks");
 
 
 function addGame(req, res) {
