@@ -7,6 +7,7 @@ import axios from "axios";
 import Gamedeets from "../pageSections/gameDetails";
 import Gamereq from "../pageSections/gameRequest";
 import Dropdown from "../pageSections/dropdown";
+import Picture from "../pageSections/picture";
 
 function Page() {
     const { handleLogout } = useAuth();
@@ -44,7 +45,7 @@ function Page() {
                   pi = Response.data[1];           
             setGamesinfo(gg);
             // console.log(gg, 1);
-            // console.log(pi, 2)
+            // console.log(pi.picture[0].piccontent, 2);
             setPlayer(pi)
     });
     }
@@ -76,13 +77,15 @@ function Page() {
     <div className='flex'>
         <span className='content'>
             <form>
-                <Dropdown/>
-                <button id="submit" type="submit" onClick={handleEvent}>Refine Search</button>
+                <Picture/>
+                
             </form>
         </span>
         <button className="navBtn" id="left" disabled={gamesinfo.idgames === 1} onClick={idDown}></button>
         <span className='content'>
-             <Gamedeets/>
+            <Gamedeets/>
+            <Dropdown id="refine"/>
+            <button id="submit" type="submit" onClick={handleEvent}>Refine Search</button>
         </span>
         <button className="navBtn" id="right" onClick={idUp}></button>
         <span className='content'>

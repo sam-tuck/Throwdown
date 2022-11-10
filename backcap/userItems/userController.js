@@ -2,7 +2,7 @@ const userservice = require("./userTasks");
 const formidable = require("formidable");
 const path = require("path");
 const uuid = require("uuid");
-const {addUserImage} = require("./usermgdb");
+const {addUserImage, getImage} = require("./usermgdb");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 
@@ -100,7 +100,6 @@ function addUser(req, res) {
                       id: newUser.idusers,
                       username: newUser.username,
                       });
-
                       res.status(200).json({
                       name: newUser.username,
                       accessToken: accessToken,
@@ -111,6 +110,7 @@ function addUser(req, res) {
       });
   });
 }
+
 
 function updateUser(req, res) {
     console.log("updateUser");

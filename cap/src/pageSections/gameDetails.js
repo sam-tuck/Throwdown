@@ -19,7 +19,6 @@ function Gamedeets() {
         ).then((Response) => {
           const gg = Response.data[0]           
         setGamesinfo(gg);
-        
       });
     };
     

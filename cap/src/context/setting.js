@@ -12,7 +12,7 @@ function SettingProvider({children}){
     const [gamesinfo, setGamesinfo] = useState({ 
         idgames: 1, gametype: "Tabletop", playset: "40K", ruleset: "Competetive", systype: "1000", booktime: "2022-09-08", addinfo: null, idusers: 1 });
     const [idgames, setIdgames] = useState(1);
-    const [player, setPlayer] = useState({});
+    const [player, setPlayer] = useState({username: "Test", email: "test@test.com", pic: undefined});
     
 
     return(

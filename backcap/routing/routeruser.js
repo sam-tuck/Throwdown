@@ -2,10 +2,11 @@ const express = require("express");
 var router = express.Router();
 const gamecontroller = require("../gamefinder/gamecontroller");
 const gameservice = require("../gamefinder/gameservice");
+const { getImage } = require("../userItems/usermgdb");
 const usertasks = require("../userItems/userTasks")
 
 
-router.post("/addgame", function (req, res, next){ 
+router.post("/addgame", function (req, res){ 
     gamecontroller.addGame(req)
     .then((game) => {
     if (game) {
@@ -71,11 +72,13 @@ router.post("/gamedeetsup", function (req, res, next){
             // do not return userpassword
             const player = user[0],
                 username = player.username,
-                email = player.email,
-                profilepic = player.profilepic;
-               
+                email = player.email;
                 
-            res.send([deets[0], {username, email, profilepic}]);
+                getImage(player.profilepic)
+                .then((picture) => {
+                  let pic = picture[0].piccontent;
+            res.send([deets[0], {username, email, pic}]);
+                });
         });
     });
 })
@@ -91,9 +94,13 @@ router.post("/gamedeetsdown", function (req, res, next){
         .then((user) => {
             const player = user[0],
                 username = player.username,
-                email = player.email,
-                profilepic = player.profilepic;
-            res.send([deets[0], {username, email, profilepic}]);
+                email = player.email;
+               
+                getImage(player.profilepic)
+                .then((picture) => {
+                  let pic = picture[0].piccontent;
+            res.send([deets[0], {username, email, pic}]);
+                });
         });
     });
 })

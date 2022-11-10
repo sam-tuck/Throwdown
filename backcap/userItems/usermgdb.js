@@ -1,3 +1,4 @@
+const { models } = require("mongoose");
 const { mgdbClient } = require("../db/mongodb");
 
 let userImageInfo = {};
@@ -17,14 +18,23 @@ function addUserImage(userImage) {
     pictype: userImage.pictype,
   });
   addUserImageInfo.save();
+ 
 }
 
-function getImage(imageID) {
-  userImageInfo.find({mgdbimageID: imageID}, (err, data) => {
+async function getImage(imageID) {
+  return new Promise(function(resolve, reject) {
+  userImageInfo.find({mgdbimageId: imageID}, (err, data) => {
     if (err) {
-      console.log(err);
-    } else {
-      return data;
-    }
-  })
+      console.log(err.message);
+      reject(err);
+      return;
+    } 
+      resolve(data);
+  }); 
+  });
 }
+
+module.exports = {
+  addUserImage,
+  getImage,
+};

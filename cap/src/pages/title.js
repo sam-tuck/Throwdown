@@ -20,9 +20,11 @@ function Title() {
                 <h1>Throw Down</h1>
                 <h2>Get your game on!</h2>
             </header>
-            <Link to="/signup" className="open">Create new account</Link>
+            <div className="flex">
+            <span className="content">
+            <Link to="/signup" className="type">Create new account</Link>
 
-            <form action="post" className="open">
+            <form action="post" className="type">
                 <input type="text" name="Username" 
                 id="Username" placeholder="Username" 
                 value={username} onChange={(e) => setUsername(e.target.value)} required/>
@@ -32,7 +34,9 @@ function Title() {
                 value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 <br></br>
                 <input type="submit" value="Login" onClick={handleSubmit}/>
-            </form>
+               </form>
+            </span>
+            </div>
         </div>
     )
 }
