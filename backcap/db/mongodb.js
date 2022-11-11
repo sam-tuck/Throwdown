@@ -14,7 +14,7 @@ const mgdbClient = function () {
         if (err) {
           reject(err);
         } else {
-            resolve(mongoose);
+          resolve(mongoose);
         }
       }
     );
@@ -22,5 +22,5 @@ const mgdbClient = function () {
 };
 
 module.exports = {
-    mgdbClient
+  mgdbClient,
 };

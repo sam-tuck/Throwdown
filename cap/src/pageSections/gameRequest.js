@@ -1,28 +1,35 @@
-import React, { useRef, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
-import { useSetting } from '../context/setting';
+import React, { useRef, useEffect } from "react";
+import emailjs from "@emailjs/browser";
+import { useSetting } from "../context/setting";
 
 export default function Gamereq() {
-
   const form = useRef();
 
-  const {player, setPlayer} = useSetting()
+  const { player, setPlayer } = useSetting();
 
-  useEffect(() => {
-  }, [setPlayer]);
+  useEffect(() => {}, [setPlayer]);
 
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('service_ze3b52u', 'template_3efap7d', form.current, '2Ly9KXV4YkL4Nx7Sk')
-      .then((result) => {
-        Array.from(document.querySelectorAll("input")).forEach(
-          input => (input.value = "")
-        );
+    emailjs
+      .sendForm(
+        "service_ze3b52u",
+        "template_3efap7d",
+        form.current,
+        "2Ly9KXV4YkL4Nx7Sk"
+      )
+      .then(
+        (result) => {
+          Array.from(document.querySelectorAll("input")).forEach(
+            (input) => (input.value = "")
+          );
           console.log(result.text);
-      }, (error) => {
+        },
+        (error) => {
           console.log(error.text);
-      });
+        }
+      );
   };
 
   return (
@@ -34,12 +41,12 @@ export default function Gamereq() {
         <input type="email" name="user_email" />
         <label>Message</label>
         <textarea name="message" />
-        <br/>
+        <br />
         <input type="text" name="to_name" value={player.username} />
-        <br/>
+        <br />
         <input type="email" name="send_to" value={player.email} />
         <input type="submit" value="Send" />
-    </form>
+      </form>
     </div>
-  )
+  );
 }

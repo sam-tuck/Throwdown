@@ -18,19 +18,18 @@ function addUserImage(userImage) {
     pictype: userImage.pictype,
   });
   addUserImageInfo.save();
- 
 }
 
 async function getImage(imageID) {
-  return new Promise(function(resolve, reject) {
-  userImageInfo.find({mgdbimageId: imageID}, (err, data) => {
-    if (err) {
-      console.log(err.message);
-      reject(err);
-      return;
-    } 
+  return new Promise(function (resolve, reject) {
+    userImageInfo.find({ mgdbimageId: imageID }, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        reject(err);
+        return;
+      }
       resolve(data);
-  }); 
+    });
   });
 }
 
