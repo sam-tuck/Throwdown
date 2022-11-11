@@ -165,7 +165,7 @@ var addGameAsync = function (req) {
     });
   };
 
-  var refineGameSearch = function (req) {
+  var refineGameSearchAsync = function (req) {
     return new Promise(function (resolve, reject) {
       const bearerHeader = req.headers["authorization"];
       const header = bearerHeader.split(" ");
@@ -213,5 +213,5 @@ var addGameAsync = function (req) {
     getGamebyDeetsAsync,
     changeGameUpAsync,
     changeGameDownAsync,
-    refineGameSearch,
+    refineGameSearchAsync,
   }

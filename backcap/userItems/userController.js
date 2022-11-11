@@ -2,7 +2,7 @@ const userservice = require("./userTasks");
 const formidable = require("formidable");
 const path = require("path");
 const uuid = require("uuid");
-const {addUserImage, getImage} = require("./usermgdb");
+const {addUserImage} = require("./usermgdb");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 
@@ -24,19 +24,14 @@ function getUserbyName(req, res) {
 
 
 function addUser(req, res) {
-  //console.log(req, 2);
   const form = formidable({
     multiples: true,
     uploadDir: path.join(__dirname, "../bin/public/uploads"),
     keepExtensions: true,
   });
   form.parse(req, (err, fields, files) => {
-      if (err) {
-          //console.log("err", err);
-          return;
-      }
-
-      console.log(fields, files);
+      if (err) {  return; }
+      // create random id for pic
       let mgdbimageId = uuid.v4();
       let userBody={
           username: fields.username,
@@ -44,7 +39,6 @@ function addUser(req, res) {
           password: fields.password,
           profilepic: mgdbimageId
       };
-      console.log(userBody);
           // check for existing user
       userservice.getUserbyNamePwdAsync(userBody.username, userBody.password)
       .then((user) => {        
@@ -53,7 +47,7 @@ function addUser(req, res) {
               message: "Username or email exists"
               });
           } else {
-                // upload pic to mongodb
+                // check for pic
             if (files.hasOwnProperty("avatar")) {
               const { filepath, newFilename } = files.avatar;
               console.log(filepath);
@@ -62,19 +56,18 @@ function addUser(req, res) {
                     return res.resultvalue({}, err, 1);
                   }
                   let exName = path.extname(filepath);
-                  console.log(exName);       
+                  // upload image to mgdb      
                   addUserImage({
                       mgdbimageId: mgdbimageId,
                       piccontent: data,
                       pictype: exName,
                   });
+                    // clean up file
                     try {
-                      fs.unlinkSync(path.join(__dirname, "../bin/public/uploads"))
-                      //file removed
+                      fs.unlinkSync(path.join(__dirname, `../bin/public/uploads/${newFilename}`))
                     } catch(err) {
                       console.error(err)
-                    }
-                    userBody.profilepic = "bc1cde58-68bc-4687-801e-c85ecdf0fe03"                                
+                    }                                                  
                       //  create user in mysql
                   userservice.addUserAsync(userBody);
                   userservice.getUserbyNamePwdAsync(userBody.username, userBody.password)
@@ -83,7 +76,6 @@ function addUser(req, res) {
                       id: newUser.idusers,
                       username: newUser.username,
                       });
-
                       res.status(200).json({
                       name: newUser.username,
                       accessToken: accessToken,
@@ -91,8 +83,8 @@ function addUser(req, res) {
                   });
               });
             } else { 
-
-                      //  create user in mysql
+               userBody.profilepic = "79f003ef-609d-46d8-adfd-8a8aece57532";
+                      //  create user in mysql with default pic
                   userservice.addUserAsync(userBody);
                   userservice.getUserbyNamePwdAsync(userBody.username, userBody.password)
                   .then((newUser) => {      

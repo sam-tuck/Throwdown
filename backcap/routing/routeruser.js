@@ -2,20 +2,9 @@ const express = require("express");
 var router = express.Router();
 const gamecontroller = require("../gamefinder/gamecontroller");
 const gameservice = require("../gamefinder/gameservice");
-const { getImage } = require("../userItems/usermgdb");
-const usertasks = require("../userItems/userTasks")
-
 
 router.post("/addgame", function (req, res){ 
-    gamecontroller.addGame(req)
-    .then((game) => {
-    if (game) {
-        res.status(403).json({
-            message: "Game exists"
-        });
-    } else {
-        gamecontroller.addGame(req);
-    }});
+    gamecontroller.addGame(req, res);
 });
 
 router.post("/update", function (req, res) {
@@ -34,7 +23,7 @@ router.post("/delete", function (req, res) {
 })
 
 // search post funtions
-router.post("/changedeetsup", function (req, res, next){
+router.post("/changedeetsup", function (req, res){
     gameservice
     .changeGameUpAsync(req)
     .then((game) => {
@@ -42,7 +31,7 @@ router.post("/changedeetsup", function (req, res, next){
     });
 })
 
-router.post("/changedeetsdown", function (req, res, next){
+router.post("/changedeetsdown", function (req, res){
     gameservice
     .changeGameDownAsync(req)
     .then((game) => {
@@ -52,84 +41,16 @@ router.post("/changedeetsdown", function (req, res, next){
 
 // search gamefinder functions
 
-router.post("/gamedeetsup", function (req, res, next){
-    // console.log(req.body)
-    const deets = []
-    gameservice
-    .findGameUpAsync(req)
-    .then((game) => {
-        // console.log(game[0], 1);
-        // error handling for reaching end of list
-        if (game[0] === undefined) {
-            deets.push({ idgames: 1, gametype: "Start of list",
-            playset: "Press up to continue", ruleset: "Back won't work",
-            systype: "glhf", booktime: "2022-09-08", addinfo: null, idusers: 1 })
-        } else {
-            deets.push(game[0])
-        }
-        usertasks.getUserbyIDAsync(deets[0].idusers)
-        .then((user) => {
-            // do not return userpassword
-            const player = user[0],
-                username = player.username,
-                email = player.email;
-                
-                getImage(player.profilepic)
-                .then((picture) => {
-                  let pic = picture[0].piccontent;
-            res.send([deets[0], {username, email, pic}]);
-                });
-        });
-    });
+router.post("/gamedeetsup", function (req, res){
+   gamecontroller.findGameUp(req, res);
 })
 
-router.post("/gamedeetsdown", function (req, res, next){
-    const deets = []
-    gameservice
-    .findGameDownAsync(req)
-    .then((game) => {
-        // error handling not needed as disabled at 1
-            deets.push(game[0])
-        usertasks.getUserbyIDAsync(deets[0].idusers)
-        .then((user) => {
-            const player = user[0],
-                username = player.username,
-                email = player.email;
-               
-                getImage(player.profilepic)
-                .then((picture) => {
-                  let pic = picture[0].piccontent;
-            res.send([deets[0], {username, email, pic}]);
-                });
-        });
-    });
+router.post("/gamedeetsdown", function (req, res){
+    gamecontroller.findGameDown(req, res);
 })
 
 router.post("/refine", function (req, res) {
-    const deets = []
-    gameservice.refineGameSearch(req)
-    .then((game) => {
-      // console.log(game[0], 1);
-      // error handling for reaching end of list
-      if (game[0] === undefined) {
-          deets.push({ idgames: 1, gametype: "Start of list",
-          playset: "Press up to continue", ruleset: "Back won't work",
-          systype: "glhf", booktime: "2022-09-08", addinfo: null, idusers: 1 })
-      } else {
-          deets.push(game[0])
-      }
-      usertasks.getUserbyIDAsync(deets[0].idusers)
-      .then((user) => {
-          // do not return userpassword
-          const player = user[0],
-              username = player.username,
-              email = player.email,
-              profilepic = player.profilepic;
-             
-              
-          res.send([deets[0], {username, email, profilepic}]);
-      });
-  });
+    gamecontroller.refineGameSearch(req, res);
 })
 
 module.exports = router;

@@ -57,31 +57,31 @@ function Dropdown (){
             <span>
                 <select className="type" value={gametype} onChange={Choose}>
                     <option>--Select--</option>
-                    {primary.map(x=>{
-                        return <option>{x.name}</option>
+                    {primary.map((x, id)=>{
+                        return <option key={id}>{x.name}</option>
                     })}
                 </select>
                 <select className="type" value={system} onChange={System}>
                     <option>-------</option>
                     {
-                        secondary.map(x => {
-                            return <option>{x}</option>
+                        secondary.map((x, id) => {
+                            return <option key={id}>{x}</option>
                         })
                     }
                 </select>
                 <select className="type" value={ruleset} onChange={Ruleset}>
                     <option>-------</option>
                     {
-                       tertiary.map(x => {
-                            return <option>{x}</option>
+                       tertiary.map((x, id) => {
+                            return <option key={id}>{x}</option>
                         })
                     }
                 </select>
                 <select className="type" value={systype} onChange={Systype}>
                     <option>-------</option>
                     {
-                        penultimate.map(x => {
-                            return <option>{x}</option>
+                        penultimate.map((x, id) => {
+                            return <option key={id}>{x}</option>
                         })
                     }
                 </select>

@@ -32,14 +32,6 @@ axios.interceptors.response.use(
 function AuthProvider({children}) {
     const navigate = useNavigate();
 
-    const [showAlert, setShowAlert] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-
-    const hideAlert = () => {
-        setShowAlert(false);
-        setAlertMessage("");
-    };
-
     const checkAuth = () => {
         const localAccessToken = localStorage.getItem("token"),
               localUsername = localStorage.getItem("username");
@@ -89,28 +81,26 @@ function AuthProvider({children}) {
               const { accessToken, name } = response.data;
               handleAuth(accessToken, name);
               navigate("/user/page");
-            }).catch(function (error) {
-              setShowAlert(true);
-              setAlertMessage(error.data.message);
-            })
+            }).catch((error) => {
+              alert(error.response.data.message);
+            });
         };
     
       const login = async ({ username, password }) => {
-        try {
-          
+        try {         
           const response = await axios.post("http://localhost:4000/auth/login", {
             username,
             password,
           });
           
           const { accessToken, name } = response.data;
+          
           handleAuth(accessToken, name);
           
           navigate("/user/page");
-        } catch (error) {
-          
-          setShowAlert(true);
-          setAlertMessage(error.response.data.message);
+        } catch (error) {      
+          alert(error.response.data.message);
+          console.log(error.response.data.message);
         }
       };
 
@@ -123,9 +113,6 @@ function AuthProvider({children}) {
             login,
             handleLogout,
             username,
-            showAlert,
-            alertMessage,
-            hideAlert,
           }}
         >
           {children}
